@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Recognition Guidelines</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.4));
+            animation: float linear infinite;
+            opacity: 0.6;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .logo img {
+            height: 120px;
+            width: auto;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        
+        .nav-links a.active {
+            color: #667eea;
+            font-weight: 700;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 2px;
+        }
+        
+        .menu-icon {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .menu-icon span {
+            width: 25px;
+            height: 3px;
+            background: #e0e0e0;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            background: rgba(26, 26, 46, 0.98);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .dropdown-menu.active {
+            display: block;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 0.8rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .dropdown-menu a:hover {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%);
+            border-radius: 20px;
+            padding: 4rem 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            text-align: center;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:nth-child(1) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .stat-card:nth-child(2) {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            box-shadow: 0 10px 30px rgba(118, 75, 162, 0.3);
+        }
+        
+        .stat-card:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe 0%, #764ba2 100%);
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .content-section {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+        
+        .content-section h1,
+        .content-section h2 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .level-card {
+            background: rgba(30, 30, 50, 0.6);
+            border-left: 5px solid #667eea;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .level-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            background: rgba(30, 30, 50, 0.8);
+        }
+
+        .level-card h3 {
+            color: #2193b0;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .level-card.level-1 h3 { color: #dc3545; }
+        .level-card.level-2 h3 { color: #fd7e14; }
+        .level-card.level-3 h3 { color: #ffc107; }
+        .level-card.level-4 h3 { color: #0d6efd; }
+        .level-card.level-5 h3 { color: #28a745; }
+
+        .level-card h4 {
+            color: #764ba2;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .level-card.level-1 { border-left-color: #dc3545; }
+        .level-card.level-2 { border-left-color: #fd7e14; }
+        .level-card.level-3 { border-left-color: #ffc107; }
+        .level-card.level-4 { border-left-color: #0d6efd; }
+        .level-card.level-5 { border-left-color: #28a745; }
+
+        .guidelines-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .guidelines-box h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .guidelines-box ul {
+            list-style: none;
+            line-height: 2;
+        }
+        
+        .guidelines-box li {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border-left: 4px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.2s, background 0.2s;
+        }
+        
+        .guidelines-box li:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .highlight-green {
+            background: rgba(40, 167, 69, 0.4);
+            padding: 4px 10px;
+            border-radius: 6px;
+            color: #a8ff9e;
+            font-weight: 600;
+        }
+        
+        .highlight-red {
+            background: rgba(220, 53, 69, 0.4);
+            padding: 4px 10px;
+            border-radius: 6px;
+            color: #ffb3bb;
+            font-weight: 600;
+        }
+        
+        .highlight-yellow {
+            background: rgba(255, 193, 7, 0.4);
+            padding: 4px 10px;
+            border-radius: 6px;
+            color: #fff9c4;
+            font-weight: 600;
+        }
+        
+        .highlight-blue {
+            background: rgba(79, 172, 254, 0.4);
+            padding: 4px 10px;
+            border-radius: 6px;
+            color: #a8d5ff;
+            font-weight: 600;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .why-card {
+            background: rgba(30, 30, 50, 0.6);
+            padding: 2rem;
+            border-radius: 15px;
+            border-top: 4px solid #667eea;
+        }
+
+        .why-card h3 {
+            color: #764ba2;
+            margin-bottom: 1rem;
+        }
+
+        .why-card ul {
+            list-style-position: inside;
+            color: #b0b0b0;
+        }
+
+        .alert-box {
+            background: rgba(102, 126, 234, 0.15);
+            border-left: 5px solid #667eea;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .alert-box strong {
+            color: #667eea;
+        }
+
+        footer {
+            background: rgba(26, 26, 46, 0.95);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            color: #b0b0b0;
+            border-top: 1px solid rgba(102, 126, 234, 0.3);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .instagram-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .instagram-link:hover {
+            color: #E4405F;
+        }
+        
+        .instagram-logo {
+            width: 24px;
+            height: 24px;
+        }
+
+        .feature-image {
+            width: 100%;
+            max-width: 800px;
+            margin: 3rem auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+        }
+        
+        .feature-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #b0b0b0;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .content-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles"></div>
+    
+    <header>
+        <nav>
+            <div class="logo" onclick="showPage('home')">
+                <img src="https://i.postimg.cc/T3mN3wXX/AI-Recognition-Logos-Oct-11-2025-at-4-32-PM-removebg-preview.png" alt="AI Recognition">
+            </div>
+            <ul class="nav-links">
+                <li><a id="nav-home" class="active" onclick="showPage('home')">Home</a></li>
+                <li><a id="nav-guidelines" onclick="showPage('guidelines')">Subject Guidelines</a></li>
+                <li><a id="nav-why" onclick="showPage('why')">Why</a></li>
+                <li><a id="nav-about" onclick="showPage('about')">About Us</a></li>
+            </ul>
+            <div class="menu-icon" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div id="dropdownMenu" class="dropdown-menu">
+                <a id="nav-feedback" onclick="showPage('feedback'); toggleMenu();">Feedback</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- HOME PAGE -->
+        <div id="home" class="page active">
+            <div class="hero">
+                <h1>Artificial Intelligence Recognition</h1>
+                <h2 style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600;">Student and Teacher Guidelines</h2>
+                <p style="font-size: 1.1rem; color: #b0b0b0; margin-top: 1rem;">
+                    Creating a trusted and collaborative framework so students and teachers use AI ethically and creatively while maintaining academic integrity.
+                </p>
+                <button onclick="showPage('why')" style="display: inline-block; background: white; color: #667eea; padding: 1rem 2.5rem; border-radius: 10px; font-weight: 700; font-size: 1.1rem; margin-top: 2rem; border: none; cursor: pointer; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); transition: all 0.3s ease;">Learn Why</button>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>5</h3>
+                    <p>Levels of AI Usage</p>
+                </div>
+                <div class="stat-card">
+                    <h3>50+</h3>
+                    <p>Teacher Contributors</p>
+                </div>
+                <div class="stat-card">
+                    <h3>1</h3>
+                    <p>Student-Led Initiative</p>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Understanding the Five Levels</h2>
+
+                <div class="level-card level-1">
+                    <h3>Level 1: No Artificial Intelligence</h3>
+                    <h4>What it means:</h4>
+                    <p><strong>AI should not be used in any form</strong> for this assignment. This level is typically reserved for <strong>in-class work</strong> where you demonstrate your own knowledge and skills.</p>
+                    <h4>Why it matters:</h4>
+                    <p>Some assignments require you to show what <strong>you personally know and can do</strong>. This helps teachers assess your individual understanding and ensures fair evaluation during assessments.</p>
+                    <h4>Examples:</h4>
+                    <p>In-class essays, exams, quizzes, timed writing assignments, or any work specifically designated as "no AI" by your teacher.</p>
+                </div>
+
+                <div class="level-card level-2">
+                    <h3>Level 2: Research and Formatting</h3>
+                    <h4>What it means:</h4>
+                    <p>AI can be used as a <strong>research assistant</strong>, similar to using a search engine like Google. You can also use it to help <strong>organize and format</strong> your thoughts in a clear, constructive way.</p>
+                    <h4>How to use it:</h4>
+                    <p>Ask AI to find information on topics, explain concepts you're studying, suggest ways to organize your ideas, or help structure an outline. <strong>The content and ideas must still be your own.</strong></p>
+                    <h4>Examples:</h4>
+                    <p>"Explain the causes of the Civil War," "Help me create an outline for my essay on climate change," or "What are some credible sources about renewable energy?"</p>
+                </div>
+
+                <div class="level-card level-3">
+                    <h3>Level 3: Revisions</h3>
+                    <h4>What it means:</h4>
+                    <p>AI helps improve <strong>work you've already created</strong>. Think of it as a tutor or editor who provides suggestions for grammar, word choice, clarity, and style <strong>after you've written your first draft</strong>.</p>
+                    <h4>How to use it:</h4>
+                    <p><strong>Write your essay, paragraph, or response first.</strong> Then, use AI to check for grammatical errors, suggest better vocabulary, improve sentence structure, or clarify confusing passages. <strong>You review and approve all changes.</strong></p>
+                    <h4>Examples:</h4>
+                    <p>"Review this paragraph for grammar errors," "Suggest a better word than 'good' in this sentence," or "Is this thesis statement clear?"</p>
+                </div>
+
+                <div class="level-card level-4">
+                    <h3>Level 4: Idea Creation</h3>
+                    <div class="alert-box">
+                        <strong>Important:</strong> This level ALWAYS requires explicit teacher permission before use. You must also document how you used AI in your work.
+                    </div>
+                    <h4>What it means:</h4>
+                    <p>AI helps you brainstorm and develop ideas, but <strong>you must transform these suggestions into your own original work</strong>. This is <strong>collaborative thinking, not copying</strong>.</p>
+                    <h4>How to use it:</h4>
+                    <p>Use AI to generate initial ideas, explore different angles on a topic, or overcome creative blocks. Then, <strong>develop these ideas into something uniquely yours</strong>.</p>
+                    <h4>Examples:</h4>
+                    <p>"Give me five creative angles for a story about time travel," "What are some unique perspectives on this historical event?" or "Help me brainstorm project ideas about environmental science."</p>
+                </div>
+
+                <div class="level-card level-5">
+                    <h3>Level 5: Content Generation</h3>
+                    <div class="alert-box">
+                        <strong>Important:</strong> This level ALWAYS requires explicit teacher permission. You must clearly acknowledge and cite which parts were AI-assisted, just like citing any other source.
+                    </div>
+                    <h4>What it means:</h4>
+                    <p>AI becomes a <strong>co-creator</strong> in your work, generating significant portions of content that <strong>you then edit, customize, and integrate</strong> into your project.</p>
+                    <h4>How to use it:</h4>
+                    <p>AI generates content based on your specifications, which <strong>you then refine, verify for accuracy, personalize, and properly attribute</strong>. <strong>You remain responsible for all final content.</strong></p>
+                    <h4>Examples:</h4>
+                    <p>Using AI to draft sections of code for a programming project, generate initial paragraphs for an essay that <strong>you heavily revise</strong>, or create data visualizations that <strong>you customize</strong>.</p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem;">
+                    <button onclick="showPage('guidelines')" style="display: inline-block; background: white; color: #667eea; padding: 1rem 2.5rem; border-radius: 10px; font-weight: 700; font-size: 1.1rem; border: none; cursor: pointer; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); transition: all 0.3s ease;">View Subject-Specific Guidelines</button>
+                </div>
+            </div>
+
+            <div class="guidelines-box">
+                <h3>Important Guidelines to Remember</h3>
+                <ul>
+                    <li><strong>Default Permissions:</strong> By default, Levels 1, 2, and 3 are permitted in every class unless your teacher specifies otherwise.</li>
+                    <li><strong>In-Class vs. Homework:</strong> Level 1 (No AI) is typically reserved for in-class assignments, since AI use cannot realistically be monitored outside of school.</li>
+                    <li><strong>Permission Required:</strong> Levels 4 and 5 ALWAYS require teacher permission before use. Using these levels without permission is a violation of academic integrity.</li>
+                    <li><strong>Proper Citation:</strong> When using Levels 4 or 5, you must properly cite AI use in your work. Include the AI tool used, the date used, and a brief description of how it was used.</li>
+                    <li><strong>Academic Integrity:</strong> These guidelines exist to help you learn effectively while using AI responsibly. Misusing AI or failing to follow these guidelines is considered academic dishonesty.</li>
+                    <li><strong>When in Doubt:</strong> If you're ever unsure which level applies to your assignment or whether AI use is appropriate, ASK YOUR TEACHER.</li>
+                </ul>
+            </div>
+            
+            <div style="text-align: center; margin: 3rem 0;">
+                <button onclick="showPage('about')" style="display: inline-block; background: white; color: #667eea; padding: 1rem 2.5rem; border-radius: 10px; font-weight: 700; font-size: 1.1rem; border: none; cursor: pointer; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); transition: all 0.3s ease;">Learn More About AIR</button>
+            </div>
+        </div>
+
+        <!-- SUBJECT GUIDELINES PAGE -->
+        <div id="guidelines" class="page">
+            <div class="content-section">
+                <h1 style="text-align: center; color: #667eea; margin-bottom: 2rem;">Subject-Specific Guidelines</h1>
+                
+                <div class="level-card" style="border-left-color: #667eea;">
+                    <h3 style="color: #667eea;">Mathematics</h3>
+                    <div class="coming-soon">
+                        <p>Guidelines for AI use in mathematics courses coming soon.</p>
+                    </div>
+                </div>
+
+                <div class="level-card" style="border-left-color: #667eea;">
+                    <h3 style="color: #667eea;">Sciences</h3>
+                    <div class="coming-soon">
+                        <p>Guidelines for AI use in science courses coming soon.</p>
+                    </div>
+                </div>
+
+                <div class="level-card" style="border-left-color: #667eea;">
+                    <h3 style="color: #667eea;">English</h3>
+                    <div class="coming-soon">
+                        <p>Guidelines for AI use in English courses coming soon.</p>
+                    </div>
+                </div>
+
+                <div class="level-card" style="border-left-color: #667eea;">
+                    <h3 style="color: #667eea;">Social Studies</h3>
+                    <div class="coming-soon">
+                        <p>Guidelines for AI use in social studies courses coming soon.</p>
+                    </div>
+                </div>
+
+                <div class="level-card" style="border-left-color: #667eea;">
+                    <h3 style="color: #667eea;">Foreign Language</h3>
+                    <div class="coming-soon">
+                        <p>Guidelines for AI use in foreign language courses coming soon.</p>
+                    </div>
+                </div>
+
+                <p style="text-align: center; color: #b0b0b0; margin-top: 3rem; font-style: italic;">
+                    Subject-specific guidelines are currently being developed in collaboration with teachers across various disciplines.
+                </p>
+            </div>
+        </div>
+
+        <!-- WHY PAGE -->
+        <div id="why" class="page">
+            <div class="content-section">
+                <h1 style="text-align: center; color: #667eea; margin-bottom: 1rem;">Why Augmentation with AI Matters</h1>
+                <p style="text-align: center; color: #b0b0b0; font-size: 1.1rem; margin-bottom: 3rem;">
+                    The integration of AI into education and the workforce is accelerating rapidly. Arizona's students need clear guidelines to navigate this transformation ethically and effectively, preparing them for a future where AI literacy is not just valuable—it's essential.
+                </p>
+
+                <div class="why-grid">
+                    <div class="why-card">
+                        <h3>Where the Job Market is Going</h3>
+                        <p style="margin-bottom: 1rem;">According to <a href="https://upcea.edu/urgent-need-for-ai-literacy/" target="_blank" rel="noopener noreferrer" style="color: #4facfe; text-decoration: underline;">UPCEA</a> and the <a href="https://www.weforum.org/stories/2024/06/ai-skills-rival-job-experience-in-recruitment/" target="_blank" rel="noopener noreferrer" style="color: #4facfe; text-decoration: underline;">World Economic Forum</a>:</p>
+                        <ul>
+                            <li>323% increase in hiring for AI roles over eight years</li>
+                            <li>66% of business leaders won't hire candidates without AI skills</li>
+                            <li>Nearly 75% prefer less experienced candidates with AI skills over more experienced ones without</li>
+                            <li>Employers increasingly use AI to reduce costs, making AI literacy essential</li>
+                        </ul>
+                    </div>
+
+                    <div class="why-card">
+                        <h3>AI Literacy Matters</h3>
+                        <p style="margin-bottom: 1rem;"><a href="https://www.sciencedirect.com/science/article/pii/S2666920X24000560" target="_blank" rel="noopener noreferrer" style="color: #4facfe; text-decoration: underline;">Stanford's High School Cheating Survey</a> reveals:</p>
+                        <ul>
+                            <li>AI literacy education correlates with lower AI-specific misuse</li>
+                            <li>Students with proper training integrate AI more ethically</li>
+                            <li>Education through workshops on ethical use and limitations is crucial</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="why-card" style="margin-top: 2rem; border-top-color: #dc3545;">
+                    <h3 style="color: #ff6b7a;">Arizona is Falling Behind - Next Steps</h3>
+                    <h4 style="color: #4facfe; margin-top: 1.5rem;">AI Literacy</h4>
+                    <ul style="margin-bottom: 1rem;">
+                        <li>No statewide AI curriculum, unlike 20% of other states</li>
+                        <li>Only 25% of Arizona educators have AI training, compared to 60% in top states</li>
+                    </ul>
+                    
+                    <h4 style="color: #4facfe; margin-top: 1.5rem;">Data Science Literacy</h4>
+                    <p style="margin-bottom: 1rem;">Data Science Literacy is the baseline for understanding AI.</p>
+                    <p style="margin-bottom: 1rem;">According to <a href="https://www.datascience4everyone.org/stateofdse" target="_blank" rel="noopener noreferrer" style="color: #4facfe; text-decoration: underline;">UChicago's State of the Field report</a>:</p>
+                    <ul>
+                        <li>Arizona is a Tier 0 State as of 2024, in the research and development phase</li>
+                        <li>Lagging behind 92% of states for Data Science Literacy</li>
+                        <li>No announced statewide plans for course catalogs or adoptions</li>
+                        <li>No tracked K-12 student enrollment in dedicated data science courses</li>
+                        <li>Arizona lacks formal learning standards for DS, weakening AI policies</li>
+                    </ul>
+                </div>
+
+                <div class="guidelines-box" style="margin-top: 3rem;">
+                    <h3>Our Response</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8;">
+                        These guidelines represent a student-driven initiative to bridge the gap, providing a framework for ethical AI use while preparing Arizona's students to compete in an AI-driven world. By establishing clear standards now, we're taking a proactive step toward building AI literacy from the ground up.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABOUT US PAGE -->
+        <div id="about" class="page">
+            <div class="content-section">
+                <h1 style="text-align: center; margin-bottom: 3rem;">About Us</h1>
+                
+                <div class="mission-box">
+                    <h2>Our Mission</h2>
+                    <p style="font-size: 1.2rem; line-height: 1.8;">Mission statement and organizational goals coming soon.</p>
+                </div>
+
+                <h2 style="text-align: center; color: #764ba2; margin-bottom: 2rem; margin-top: 5rem;">Meet Our Team</h2>
+                
+                <div style="margin-bottom: 3rem;">
+                    <div class="team-grid">
+                        <div class="team-member-card">
+                            <div class="team-placeholder">👤</div>
+                            <h4 style="color: #667eea; margin-bottom: 0.5rem;">President</h4>
+                            <p style="color: #b0b0b0; font-style: italic;">Name & bio coming soon</p>
+                        </div>
+                        
+                        <div class="team-member-card">
+                            <div class="team-placeholder">👤</div>
+                            <h4 style="color: #4facfe; margin-bottom: 0.5rem;">Vice President</h4>
+                            <p style="color: #b0b0b0; font-style: italic;">Name & bio coming soon</p>
+                        </div>
+                        
+                        <div class="team-member-card">
+                            <div class="team-placeholder">👤</div>
+                            <h4 style="color: #4facfe; margin-bottom: 0.5rem;">Vice President</h4>
+                            <p style="color: #b0b0b0; font-style: italic;">Name & bio coming soon</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEEDBACK PAGE -->
+        <div id="feedback" class="page">
+            <div class="content-section">
+                <h1 style="text-align: center; margin-bottom: 1rem;">We Value Your Feedback</h1>
+                <p style="text-align: center; color: #b0b0b0; margin-bottom: 4rem;">
+                    Help us improve AI Recognition by sharing your thoughts, suggestions, or concerns.
+                </p>
+
+                <!-- Teacher Feedback Section -->
+                <div style="margin-bottom: 4rem;">
+                    <h2 style="text-align: center; color: #667eea; margin-bottom: 2rem;">Teacher Feedback</h2>
+                    <div style="max-width: 700px; margin: 0 auto;">
+                        <div style="background: rgba(30, 30, 50, 0.6); padding: 2.5rem; border-radius: 15px; border: 1px solid rgba(102, 126, 234, 0.3); text-align: center;">
+                            <p style="color: #b0b0b0; margin-bottom: 2rem; font-size: 1.1rem;">
+                                We appreciate your input as an educator. Please share your feedback through our dedicated teacher survey.
+                            </p>
+                            <a href="https://docs.google.com/forms/d/1av4_YaBTid5Kkgm_IFwxGejr_k4Giaf9aFM7bZwM9c4/viewform?edit_requested=true" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1rem 2.5rem; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 1.1rem; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);">
+                                Take Teacher Survey
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Everyone Else Feedback Section -->
+                <div>
+                    <h2 style="text-align: center; color: #764ba2; margin-bottom: 2rem;">General Feedback</h2>
+                    <div style="max-width: 700px; margin: 0 auto;">
+                        <div style="background: rgba(30, 30, 50, 0.6); padding: 2.5rem; border-radius: 15px; border: 1px solid rgba(102, 126, 234, 0.3);">
+                            <form id="feedbackForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                                <div>
+                                    <label style="display: block; color: #667eea; font-weight: 600; margin-bottom: 0.5rem;">I am a... *</label>
+                                    <select id="role" name="role" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(102, 126, 234, 0.3); background: rgba(26, 26, 46, 0.8); color: #e0e0e0; font-size: 1rem;" required>
+                                        <option value="">Select one</option>
+                                        <option>Student</option>
+                                        <option>Parent/Guardian</option>
+                                        <option>Administrator</option>
+                                        <option>Community Member</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label style="display: block; color: #667eea; font-weight: 600; margin-bottom: 0.5rem;">Name (Optional)</label>
+                                    <input type="text" id="name" name="name" placeholder="Your name" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(102, 126, 234, 0.3); background: rgba(26, 26, 46, 0.8); color: #e0e0e0; font-size: 1rem;">
+                                </div>
+                                
+                                <div>
+                                    <label style="display: block; color: #667eea; font-weight: 600; margin-bottom: 0.5rem;">Email (Optional)</label>
+                                    <input type="email" id="email" name="email" placeholder="your.email@example.com" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(102, 126, 234, 0.3); background: rgba(26, 26, 46, 0.8); color: #e0e0e0; font-size: 1rem;">
+                                </div>
+                                
+                                <div>
+                                    <label style="display: block; color: #667eea; font-weight: 600; margin-bottom: 0.5rem;">Feedback Type</label>
+                                    <select id="feedbackType" name="feedbackType" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(102, 126, 234, 0.3); background: rgba(26, 26, 46, 0.8); color: #e0e0e0; font-size: 1rem;">
+                                        <option>General Feedback</option>
+                                        <option>Suggestion</option>
+                                        <option>Bug Report</option>
+                                        <option>Question</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label style="display: block; color: #667eea; font-weight: 600; margin-bottom: 0.5rem;">Your Message *</label>
+                                    <textarea id="message" name="message" placeholder="Share your thoughts..." rows="6" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(102, 126, 234, 0.3); background: rgba(26, 26, 46, 0.8); color: #e0e0e0; font-size: 1rem; resize: vertical;" required></textarea>
+                                </div>
+                                
+                                <div id="formStatus" style="display: none; padding: 1rem; border-radius: 8px; text-align: center; font-weight: 600;"></div>
+                                
+                                <button type="submit" id="submitBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1rem 2rem; border-radius: 10px; border: none; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);">
+                                    Submit Feedback
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <p style="margin: 0;">Email: TBD</p>
+                <span style="color: rgba(176, 176, 176, 0.5);">|</span>
+                <a href="https://www.instagram.com/airecognitionaz/" target="_blank" rel="noopener noreferrer" class="instagram-link">
+                    <svg class="instagram-logo" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    @airecognitionaz
+                </a>
+            </div>
+            <p style="margin: 0;">&copy; 2025 Artificial Intelligence Recognition | A Student-Led Organization</p>
+        </div>
+    </footer>
+
+    <script>
+        // Create particle effect
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random size between 2px and 8px
+                const size = Math.random() * 6 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Random horizontal position
+                particle.style.left = Math.random() * 100 + '%';
+                
+                // Random animation duration between 15s and 30s
+                const duration = Math.random() * 15 + 15;
+                particle.style.animationDuration = duration + 's';
+                
+                // Random delay for staggered effect
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update active navigation link
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => link.classList.remove('active'));
+            document.getElementById('nav-' + pageId).classList.add('active');
+            
+            // Update URL hash
+            window.location.hash = pageId;
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Handle hash changes (browser back/forward, direct links)
+        function handleHashChange() {
+            let hash = window.location.hash.substring(1); // Remove the #
+            if (!hash || !document.getElementById(hash)) {
+                hash = 'home'; // Default to home if no hash or invalid hash
+            }
+            showPage(hash);
+        }
+        
+        // Listen for hash changes
+        window.addEventListener('hashchange', handleHashChange);
+        
+        // Handle initial page load
+        window.addEventListener('load', () => {
+            createParticles();
+            handleHashChange();
+            setupFeedbackForm();
+        });
+        
+        // Toggle dropdown menu
+        function toggleMenu() {
+            const dropdown = document.getElementById('dropdownMenu');
+            dropdown.classList.toggle('active');
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('dropdownMenu');
+            const menuIcon = document.querySelector('.menu-icon');
+            if (dropdown && !dropdown.contains(e.target) && !menuIcon.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+        
+        // Setup feedback form submission
+        function setupFeedbackForm() {
+            const form = document.getElementById('feedbackForm');
+            if (!form) return;
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const submitBtn = document.getElementById('submitBtn');
+                const formStatus = document.getElementById('formStatus');
+                const originalBtnText = submitBtn.textContent;
+                
+                // Disable button and show loading
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+                formStatus.style.display = 'none';
+                
+                // Gather form data
+                const formData = {
+                    role: document.getElementById('role').value,
+                    name: document.getElementById('name').value || 'Anonymous',
+                    email: document.getElementById('email').value || 'Not provided',
+                    feedbackType: document.getElementById('feedbackType').value,
+                    message: document.getElementById('message').value
+                };
+                
+                try {
+                    const response = await fetch('https://script.google.com/macros/s/AKfycbzEDDQvAJTRGbo1BXQhEcWduRD6LbFQo_C_jcDwWmvqB-joMEA9cUal1sqovui9eLDR/exec', {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    // Show success message
+                    formStatus.style.display = 'block';
+                    formStatus.style.background = 'rgba(40, 167, 69, 0.2)';
+                    formStatus.style.color = '#5ce687';
+                    formStatus.textContent = '✓ Thank you! Your feedback has been submitted successfully.';
+                    
+                    // Reset form
+                    form.reset();
+                    
+                } catch (error) {
+                    // Show error message
+                    formStatus.style.display = 'block';
+                    formStatus.style.background = 'rgba(220, 53, 69, 0.2)';
+                    formStatus.style.color = '#ff6b7a';
+                    formStatus.textContent = '✗ Something went wrong. Please try again.';
+                }
+                
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+                
+                // Hide status message after 5 seconds
+                setTimeout(() => {
+                    formStatus.style.display = 'none';
+                }, 5000);
+            });
+        }
+    </script>
+</body>
+</html>
