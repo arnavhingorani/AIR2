@@ -512,50 +512,88 @@
                 height: 60px;
             }
             
+            .container {
+                padding: 10px;
+            }
+            
+            body {
+                overflow-x: hidden;
+                word-wrap: break-word;
+            }
+            
+            * {
+                max-width: 100%;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+            
+            h1, h2, h3, h4, h5, h6 {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                hyphens: auto;
+            }
+            
+            p, li, a {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+            
             .content-section {
                 padding: 1.5rem;
+                overflow-x: hidden;
             }
             
             .stats {
                 grid-template-columns: 1fr;
+                padding: 0 10px;
             }
             
             .stat-card {
                 padding: 1.5rem;
+                overflow-wrap: break-word;
             }
             
             .level-card {
                 padding: 1.5rem;
+                overflow-wrap: break-word;
             }
             
             .why-grid {
                 grid-template-columns: 1fr;
+                padding: 0;
             }
             
             .team-grid {
                 grid-template-columns: 1fr;
+                padding: 0;
             }
             
             .mission-box {
                 padding: 2rem 1.5rem;
+                overflow-wrap: break-word;
             }
             
             .guidelines-box {
                 padding: 1.5rem;
+                overflow-wrap: break-word;
             }
             
             .guidelines-box li {
                 padding: 1rem;
                 font-size: 0.95rem;
+                word-wrap: break-word;
             }
             
             .hero {
                 padding: 2.5rem 1.5rem;
+                overflow-wrap: break-word;
             }
             
             button {
                 font-size: 1rem !important;
                 padding: 0.9rem 2rem !important;
+                white-space: normal !important;
+                word-wrap: break-word !important;
             }
             
             .footer-links {
@@ -565,6 +603,28 @@
             
             .footer-links span {
                 display: none;
+            }
+            
+            input, select, textarea {
+                font-size: 16px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            
+            .dropdown-menu {
+                right: 10px;
+                left: 10px;
+                max-width: calc(100vw - 20px);
+            }
+            
+            .why-card, .team-member-card {
+                overflow-wrap: break-word;
+                word-wrap: break-word;
+            }
+            
+            table, img, video {
+                max-width: 100% !important;
+                height: auto !important;
             }
         }
     </style>
