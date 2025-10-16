@@ -102,6 +102,12 @@
             gap: 2rem;
             list-style: none;
         }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
 
         .nav-links a {
             color: #e0e0e0;
@@ -157,10 +163,15 @@
             min-width: 200px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             z-index: 1000;
+            list-style: none;
         }
         
         .dropdown-menu.active {
             display: block;
+        }
+        
+        .dropdown-menu li {
+            width: 100%;
         }
         
         .dropdown-menu a {
@@ -175,6 +186,17 @@
         .dropdown-menu a:hover {
             background: rgba(102, 126, 234, 0.2);
             color: #667eea;
+        }
+        
+        .dropdown-menu a.active {
+            color: #667eea;
+            font-weight: 700;
+        }
+        
+        @media (min-width: 769px) {
+            .dropdown-menu {
+                display: none !important;
+            }
         }
 
         .page {
@@ -486,33 +508,6 @@
                 font-size: 1.2rem;
             }
             
-            .nav-links {
-                display: none;
-            }
-            
-            .nav-links.mobile-active {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(26, 26, 46, 0.98);
-                border-bottom: 1px solid rgba(102, 126, 234, 0.3);
-                padding: 1rem 0;
-                gap: 0;
-            }
-            
-            .nav-links.mobile-active li {
-                width: 100%;
-            }
-            
-            .nav-links.mobile-active a {
-                display: block;
-                padding: 1rem 2rem;
-                border-bottom: none;
-            }
-            
             .logo img {
                 height: 60px;
             }
@@ -583,20 +578,24 @@
                 <img src="https://i.postimg.cc/T3mN3wXX/AI-Recognition-Logos-Oct-11-2025-at-4-32-PM-removebg-preview.png" alt="AI Recognition">
             </div>
             <ul class="nav-links" id="navLinks">
-                <li><a id="nav-home" class="active" onclick="showPage('home'); closeMobileMenu();">Home</a></li>
-                <li><a id="nav-guidelines" onclick="showPage('guidelines'); closeMobileMenu();">Subject Guidelines</a></li>
-                <li><a id="nav-why" onclick="showPage('why'); closeMobileMenu();">Why</a></li>
-                <li><a id="nav-about" onclick="showPage('about'); closeMobileMenu();">About Us</a></li>
-                <li><a id="nav-feedback" onclick="showPage('feedback'); closeMobileMenu();">Feedback</a></li>
+                <li><a id="nav-home" class="active" onclick="showPage('home')">Home</a></li>
+                <li><a id="nav-guidelines" onclick="showPage('guidelines')">Subject Guidelines</a></li>
+                <li><a id="nav-why" onclick="showPage('why')">Why</a></li>
+                <li><a id="nav-about" onclick="showPage('about')">About Us</a></li>
+                <li><a id="nav-feedback-desktop" onclick="showPage('feedback')">Feedback</a></li>
             </ul>
-            <div class="menu-icon" onclick="toggleMobileMenu()">
+            <div class="menu-icon" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
-            <div id="dropdownMenu" class="dropdown-menu">
-                <a id="nav-feedback-desktop" onclick="showPage('feedback'); toggleMenu();">Feedback</a>
-            </div>
+            <ul id="dropdownMenu" class="dropdown-menu">
+                <li><a id="nav-home-mobile" onclick="showPage('home'); toggleMenu();">Home</a></li>
+                <li><a id="nav-guidelines-mobile" onclick="showPage('guidelines'); toggleMenu();">Subject Guidelines</a></li>
+                <li><a id="nav-why-mobile" onclick="showPage('why'); toggleMenu();">Why</a></li>
+                <li><a id="nav-about-mobile" onclick="showPage('about'); toggleMenu();">About Us</a></li>
+                <li><a id="nav-feedback" onclick="showPage('feedback'); toggleMenu();">Feedback</a></li>
+            </ul>
         </nav>
     </header>
 
@@ -983,7 +982,10 @@
             // Update active navigation link
             const navLinks = document.querySelectorAll('.nav-links a');
             navLinks.forEach(link => link.classList.remove('active'));
-            document.getElementById('nav-' + pageId).classList.add('active');
+            const desktopLink = document.getElementById('nav-' + pageId + '-desktop');
+            const regularLink = document.getElementById('nav-' + pageId);
+            if (desktopLink) desktopLink.classList.add('active');
+            if (regularLink) regularLink.classList.add('active');
             
             // Update URL hash
             window.location.hash = pageId;
@@ -1014,18 +1016,6 @@
         function toggleMenu() {
             const dropdown = document.getElementById('dropdownMenu');
             dropdown.classList.toggle('active');
-        }
-        
-        // Toggle mobile menu
-        function toggleMobileMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('mobile-active');
-        }
-        
-        // Close mobile menu
-        function closeMobileMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.remove('mobile-active');
         }
         
         // Close dropdown when clicking outside
