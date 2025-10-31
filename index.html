@@ -67,7 +67,7 @@
         header {
             background: rgba(26, 26, 46, 0.95);
             backdrop-filter: blur(10px);
-            padding: 0.5rem 0;
+            padding: 0.3rem 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
             position: sticky;
             top: 0;
@@ -92,7 +92,7 @@
         }
         
         .logo img {
-            height: 120px;
+            height: 140px;
             width: auto;
             display: block;
         }
@@ -224,7 +224,7 @@
         }
 
         .hero h1 {
-            font-size: 2.4rem;
+            font-size: 2.3rem;
             margin-bottom: 1rem;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
@@ -254,10 +254,6 @@
             text-align: center;
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
             transition: transform 0.3s;
-        }
-        
-        .stat-card:nth-child(1) {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         
         .stat-card:nth-child(2) {
@@ -312,28 +308,28 @@
         }
 
         .level-card h3 {
-            color: #2193b0;
+            color: #667eea;
             margin-bottom: 1rem;
             font-size: 1.5rem;
         }
         
+        .level-card.level-1 { border-left-color: #dc3545; }
+        .level-card.level-2 { border-left-color: #fd7e14; }
+        .level-card.level-3 { border-left-color: #ffc107; }
+        .level-card.level-4 { border-left-color: #4facfe; }
+        .level-card.level-5 { border-left-color: #28a745; }
+        
         .level-card.level-1 h3 { color: #dc3545; }
         .level-card.level-2 h3 { color: #fd7e14; }
         .level-card.level-3 h3 { color: #ffc107; }
-        .level-card.level-4 h3 { color: #0d6efd; }
+        .level-card.level-4 h3 { color: #4facfe; }
         .level-card.level-5 h3 { color: #28a745; }
-
+        
         .level-card h4 {
             color: #764ba2;
             margin-top: 1.5rem;
             margin-bottom: 0.5rem;
         }
-
-        .level-card.level-1 { border-left-color: #dc3545; }
-        .level-card.level-2 { border-left-color: #fd7e14; }
-        .level-card.level-3 { border-left-color: #ffc107; }
-        .level-card.level-4 { border-left-color: #0d6efd; }
-        .level-card.level-5 { border-left-color: #28a745; }
 
         .guidelines-box {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -367,38 +363,6 @@
         .guidelines-box li:hover {
             transform: translateX(5px);
             background: rgba(255, 255, 255, 0.15);
-        }
-        
-        .highlight-green {
-            background: rgba(40, 167, 69, 0.4);
-            padding: 4px 10px;
-            border-radius: 6px;
-            color: #a8ff9e;
-            font-weight: 600;
-        }
-        
-        .highlight-red {
-            background: rgba(220, 53, 69, 0.4);
-            padding: 4px 10px;
-            border-radius: 6px;
-            color: #ffb3bb;
-            font-weight: 600;
-        }
-        
-        .highlight-yellow {
-            background: rgba(255, 193, 7, 0.4);
-            padding: 4px 10px;
-            border-radius: 6px;
-            color: #fff9c4;
-            font-weight: 600;
-        }
-        
-        .highlight-blue {
-            background: rgba(79, 172, 254, 0.4);
-            padding: 4px 10px;
-            border-radius: 6px;
-            color: #a8d5ff;
-            font-weight: 600;
         }
 
         .why-grid {
@@ -478,25 +442,86 @@
             height: 24px;
         }
 
-        .feature-image {
-            width: 100%;
-            max-width: 800px;
-            margin: 3rem auto;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            border: 2px solid rgba(102, 126, 234, 0.3);
+        .data-stat {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            margin: 0.8rem 0;
         }
         
-        .feature-image img {
-            width: 100%;
-            height: auto;
-            display: block;
+        .stat-icon {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            min-width: 8px;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
         }
+        
+        .stat-content {
+            flex: 1;
+            color: #b0b0b0;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .coming-soon {
             text-align: center;
             padding: 4rem 2rem;
             color: #b0b0b0;
             font-style: italic;
+        }
+        
+        .team-member-card {
+            background: rgba(30, 30, 50, 0.6);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .team-member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .mission-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3rem;
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .mission-box h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .team-placeholder {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
         }
 
         @media (max-width: 768px) {
@@ -545,7 +570,7 @@
             }
             
             .container {
-                padding: 10px;
+                padding: 5px;
             }
             
             body {
@@ -571,22 +596,22 @@
             }
             
             .content-section {
-                padding: 1.5rem;
+                padding: 1rem;
                 overflow-x: hidden;
             }
             
             .stats {
                 grid-template-columns: 1fr;
-                padding: 0 10px;
+                padding: 0 5px;
             }
             
             .stat-card {
-                padding: 1.5rem;
+                padding: 1.2rem;
                 overflow-wrap: break-word;
             }
             
             .level-card {
-                padding: 1.5rem;
+                padding: 1.2rem;
                 overflow-wrap: break-word;
             }
             
@@ -601,29 +626,29 @@
             }
             
             .mission-box {
-                padding: 2rem 1.5rem;
+                padding: 1.5rem 1rem;
                 overflow-wrap: break-word;
             }
             
             .guidelines-box {
-                padding: 1.5rem;
+                padding: 1.2rem;
                 overflow-wrap: break-word;
             }
             
             .guidelines-box li {
-                padding: 1rem;
-                font-size: 0.95rem;
+                padding: 0.8rem;
+                font-size: 0.85rem;
                 word-wrap: break-word;
             }
             
             .hero {
-                padding: 2.5rem 1.5rem;
+                padding: 2rem 1rem;
                 overflow-wrap: break-word;
             }
             
             button {
-                font-size: 1rem !important;
-                padding: 0.9rem 2rem !important;
+                font-size: 0.9rem !important;
+                padding: 0.8rem 1.5rem !important;
                 white-space: normal !important;
                 word-wrap: break-word !important;
             }
@@ -667,7 +692,7 @@
     <header>
         <nav>
             <div class="logo" onclick="showPage('home')">
-                <img src="https://i.postimg.cc/T3mN3wXX/AI-Recognition-Logos-Oct-11-2025-at-4-32-PM-removebg-preview.png" alt="AI Recognition">
+                <img src="https://i.postimg.cc/rFfdB7kq/AIR-logo-recolored-removebg-preview.png" alt="AI Recognition">
             </div>
             <ul class="nav-links" id="navLinks">
                 <li><a id="nav-home" class="active" onclick="showPage('home')">Home</a></li>
@@ -696,9 +721,9 @@
         <div id="home" class="page active">
             <div class="hero">
                 <h1>Artificial Intelligence Recognition</h1>
-                <h2 style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600;">Student and Teacher Guidelines</h2>
+                <h2 style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600;">Recognize the Future with AI</h2>
                 <p style="font-size: 1.1rem; color: #b0b0b0; margin-top: 1rem;">
-                    Creating a trusted and collaborative framework so students and teachers use AI ethically and creatively while maintaining academic integrity.
+                    A <strong style="color: #667eea;">student-led, K-12</strong> framework to help students and teachers use AI ethically and creatively while maintaining academic integrity.
                 </p>
                 <button onclick="showPage('why')" style="display: inline-block; background: white; color: #667eea; padding: 1rem 2.5rem; border-radius: 10px; font-weight: 700; font-size: 1.1rem; margin-top: 2rem; border: none; cursor: pointer; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); transition: all 0.3s ease;">Learn Why</button>
             </div>
@@ -714,7 +739,7 @@
                 </div>
                 <div class="stat-card">
                     <h3>1</h3>
-                    <p>Student-Led Initiative</p>
+                    <p>Student-Led Organization</p>
                 </div>
             </div>
 
@@ -802,45 +827,207 @@
         <!-- SUBJECT GUIDELINES PAGE -->
         <div id="guidelines" class="page">
             <div class="content-section">
-                <h1 style="text-align: center; color: #667eea; margin-bottom: 2rem;">Subject-Specific Guidelines</h1>
+                <h1 style="text-align: center; margin-bottom: 2rem;">Subject-Specific Guidelines</h1>
+                <p style="text-align: center; color: #b0b0b0; margin-bottom: 3rem;">Clear guidance on how to use AI appropriately in each subject area.</p>
                 
-                <div class="level-card" style="border-left-color: #667eea;">
-                    <h3 style="color: #667eea;">Mathematics</h3>
-                    <div class="coming-soon">
-                        <p>Guidelines for AI use in mathematics courses coming soon.</p>
-                    </div>
-                </div>
-
-                <div class="level-card" style="border-left-color: #667eea;">
-                    <h3 style="color: #667eea;">Sciences</h3>
-                    <div class="coming-soon">
-                        <p>Guidelines for AI use in science courses coming soon.</p>
-                    </div>
-                </div>
-
+                <!-- English -->
                 <div class="level-card" style="border-left-color: #667eea;">
                     <h3 style="color: #667eea;">English</h3>
-                    <div class="coming-soon">
-                        <p>Guidelines for AI use in English courses coming soon.</p>
+                    <h4 style="color: #28a745; margin-top: 1.5rem;">✓ Acceptable Use</h4>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            <span class="stat-number">Grammar and spelling</span> checks after writing your own draft
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Practicing <span class="stat-number">literary analysis</span> with AI as a discussion partner (clearly noted)
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Using AI to properly <span class="stat-number">format and create citations</span>
+                        </div>
+                    </div>
+                    
+                    <h4 style="color: #dc3545; margin-top: 1.5rem;">✗ Not Acceptable Use</h4>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Having AI <span class="stat-number">write essays, paragraphs, or interpretations</span>
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Using AI to <span class="stat-number">summarize or analyze</span> literature instead of reading it
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Asking AI to <span class="stat-number">generate essay topics</span> instead of brainstorming your own
+                        </div>
                     </div>
                 </div>
 
+                <!-- Math -->
+                <div class="level-card" style="border-left-color: #764ba2;">
+                    <h3 style="color: #764ba2;">Math</h3>
+                    <h4 style="color: #28a745; margin-top: 1.5rem;">✓ Acceptable Use</h4>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            <span class="stat-number">Checking final answers</span> or graphing completed problems
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Getting <span class="stat-number">step-by-step explanations</span> after solving manually
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Using AI to explore <span class="stat-number">alternate solution methods</span> or compare approaches
+                        </div>
+                    </div>
+                    
+                    <h4 style="color: #dc3545; margin-top: 1.5rem;">✗ Not Acceptable Use</h4>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Using AI to <span class="stat-number">complete full problem sets</span> or generate fake work steps
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            <span class="stat-number">Copying AI-generated answers</span> without understanding the reasoning
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Science -->
+                <div class="level-card" style="border-left-color: #4facfe;">
+                    <h3 style="color: #4facfe;">Science</h3>
+                    <h4 style="color: #28a745; margin-top: 1.5rem;">✓ Acceptable Use</h4>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Using AI to <span class="stat-number">brainstorm research topics</span>
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Asking AI to <span class="stat-number">explain complex scientific concepts</span>
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Using AI to find <span class="stat-number">credible sources</span> and format citations appropriately
+                        </div>
+                    </div>
+                    
+                    <h4 style="color: #dc3545; margin-top: 1.5rem;">✗ Not Acceptable Use</h4>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Using AI to create <span class="stat-number">fake data, results, or lab observations</span>
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Having AI <span class="stat-number">write lab reports, discussions, or hypotheses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Studies -->
                 <div class="level-card" style="border-left-color: #667eea;">
                     <h3 style="color: #667eea;">Social Studies</h3>
-                    <div class="coming-soon">
-                        <p>Guidelines for AI use in social studies courses coming soon.</p>
+                    <h4 style="color: #28a745; margin-top: 1.5rem;">✓ Acceptable Use</h4>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            <span class="stat-number">Summarizing primary sources</span> or organizing research notes
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Using AI to <span class="stat-number">grade or critique practice</span> AP History SAQs or essays
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Using AI to <span class="stat-number">fact-check, generate timelines, or build study guides</span>
+                        </div>
+                    </div>
+                    
+                    <h4 style="color: #dc3545; margin-top: 1.5rem;">✗ Not Acceptable Use</h4>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Having AI <span class="stat-number">write essays, arguments, or historical analyses</span>
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Using AI to <span class="stat-number">fabricate or misrepresent</span> sources or citations
+                        </div>
                     </div>
                 </div>
 
-                <div class="level-card" style="border-left-color: #667eea;">
-                    <h3 style="color: #667eea;">Foreign Language</h3>
-                    <div class="coming-soon">
-                        <p>Guidelines for AI use in foreign language courses coming soon.</p>
+                <!-- Foreign Language -->
+                <div class="level-card" style="border-left-color: #764ba2;">
+                    <h3 style="color: #764ba2;">Foreign Language</h3>
+                    <h4 style="color: #28a745; margin-top: 1.5rem;">✓ Acceptable Use</h4>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Practicing <span class="stat-number">pronunciation or conversation</span> with AI tools
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            <span class="stat-number">Checking grammar and vocabulary</span> after writing your own sentences
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Using AI to explore <span class="stat-number">cultural context, idioms, or regional differences</span>
+                        </div>
+                    </div>
+                    
+                    <h4 style="color: #dc3545; margin-top: 1.5rem;">✗ Not Acceptable Use</h4>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Using AI <span class="stat-number">translators or chatbots</span> to complete graded work
+                        </div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            <span class="stat-number">Copying or rephrasing</span> AI-generated sentences as your own
+                        </div>
                     </div>
                 </div>
 
                 <p style="text-align: center; color: #b0b0b0; margin-top: 3rem; font-style: italic;">
-                    Subject-specific guidelines are currently being developed in collaboration with teachers across various disciplines.
+                    These guidelines are designed to help you use AI as a learning tool while maintaining academic integrity.
                 </p>
             </div>
         </div>
@@ -848,52 +1035,122 @@
         <!-- WHY PAGE -->
         <div id="why" class="page">
             <div class="content-section">
-                <h1 style="text-align: center; color: #667eea; margin-bottom: 1rem;">Why Augmentation with AI Matters</h1>
+                <h1 style="text-align: center; color: #667eea; margin-bottom: 1rem;">Why the AIR Guidelines Exist</h1>
                 <p style="text-align: center; color: #b0b0b0; font-size: 1.1rem; margin-bottom: 3rem;">
-                    The integration of AI into education and the workforce is accelerating rapidly. Arizona's students need clear guidelines to navigate this transformation ethically and effectively, preparing them for a future where AI literacy is not just valuable—it's essential.
+                    The integration of AI into education and the workforce is accelerating rapidly. Arizona's students need clear guidelines to navigate this transformation ethically and effectively, preparing them for a future where AI literacy is essential.
                 </p>
 
                 <div class="why-grid">
                     <div class="why-card">
                         <h3>Where the Job Market is Going</h3>
-                        <p style="margin-bottom: 1rem;">According to <a href="https://upcea.edu/urgent-need-for-ai-literacy/" target="_blank" rel="noopener noreferrer" style="color: #4facfe; text-decoration: underline;">UPCEA</a> and the <a href="https://www.weforum.org/stories/2024/06/ai-skills-rival-job-experience-in-recruitment/" target="_blank" rel="noopener noreferrer" style="color: #4facfe; text-decoration: underline;">World Economic Forum</a>:</p>
-                        <ul>
-                            <li>323% increase in hiring for AI roles over eight years</li>
-                            <li>66% of business leaders won't hire candidates without AI skills</li>
-                            <li>Nearly 75% prefer less experienced candidates with AI skills over more experienced ones without</li>
-                            <li>Employers increasingly use AI to reduce costs, making AI literacy essential</li>
-                        </ul>
+                        <p style="margin-bottom: 1.5rem;">According to <a href="https://upcea.edu/urgent-need-for-ai-literacy/" target="_blank" rel="noopener noreferrer" style="color: #4facfe; text-decoration: underline;">UPCEA</a> and the <a href="https://www.weforum.org/stories/2024/06/ai-skills-rival-job-experience-in-recruitment/" target="_blank" rel="noopener noreferrer" style="color: #4facfe; text-decoration: underline;">World Economic Forum</a>:</p>
+                        
+                        <div class="data-stat">
+                            <div class="stat-icon"></div>
+                            <div class="stat-content">
+                                <span class="stat-number">323%</span> increase in hiring for AI roles over eight years
+                            </div>
+                        </div>
+                        
+                        <div class="data-stat">
+                            <div class="stat-icon"></div>
+                            <div class="stat-content">
+                                <span class="stat-number">66%</span> of business leaders won't hire candidates without AI skills
+                            </div>
+                        </div>
+                        
+                        <div class="data-stat">
+                            <div class="stat-icon"></div>
+                            <div class="stat-content">
+                                <span class="stat-number">75%</span> prefer less experienced candidates with AI skills
+                            </div>
+                        </div>
+                        
+                        <div class="data-stat">
+                            <div class="stat-icon"></div>
+                            <div class="stat-content">
+                                Employers increasingly use AI to reduce costs, making AI literacy essential
+                            </div>
+                        </div>
                     </div>
 
                     <div class="why-card">
                         <h3>AI Literacy Matters</h3>
-                        <p style="margin-bottom: 1rem;"><a href="https://www.sciencedirect.com/science/article/pii/S2666920X24000560" target="_blank" rel="noopener noreferrer" style="color: #4facfe; text-decoration: underline;">Stanford's High School Cheating Survey</a> reveals:</p>
-                        <ul>
-                            <li>AI literacy education correlates with lower AI-specific misuse</li>
-                            <li>Students with proper training integrate AI more ethically</li>
-                            <li>Education through workshops on ethical use and limitations is crucial</li>
-                        </ul>
+                        <p style="margin-bottom: 1.5rem;"><a href="https://www.sciencedirect.com/science/article/pii/S2666920X24000560" target="_blank" rel="noopener noreferrer" style="color: #4facfe; text-decoration: underline;">Stanford's High School Cheating Survey</a> reveals:</p>
+                        
+                        <div class="data-stat">
+                            <div class="stat-icon"></div>
+                            <div class="stat-content">
+                                AI literacy education correlates with lower AI-specific misuse
+                            </div>
+                        </div>
+                        
+                        <div class="data-stat">
+                            <div class="stat-icon"></div>
+                            <div class="stat-content">
+                                Students with proper training integrate AI more ethically
+                            </div>
+                        </div>
+                        
+                        <div class="data-stat">
+                            <div class="stat-icon"></div>
+                            <div class="stat-content">
+                                Education through workshops on ethical use and limitations is crucial
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="why-card" style="margin-top: 2rem; border-top-color: #667eea;">
+                    <h3 style="color: #667eea;">A Clear Disconnect</h3>
+                    <p style="margin-bottom: 1.5rem; color: #b0b0b0;">What teachers are saying:</p>
+                    
+                    <div class="coming-soon">
+                        <p>Teacher insights and perspectives coming soon.</p>
                     </div>
                 </div>
 
                 <div class="why-card" style="margin-top: 2rem; border-top-color: #dc3545;">
                     <h3 style="color: #ff6b7a;">Arizona is Falling Behind - Next Steps</h3>
-                    <h4 style="color: #4facfe; margin-top: 1.5rem;">AI Literacy</h4>
-                    <ul style="margin-bottom: 1rem;">
-                        <li>No statewide AI curriculum, unlike 20% of other states</li>
-                        <li>Only 25% of Arizona educators have AI training, compared to 60% in top states</li>
-                    </ul>
                     
-                    <h4 style="color: #4facfe; margin-top: 1.5rem;">Data Science Literacy</h4>
+                    <h4 style="color: #4facfe; margin-top: 1.5rem; margin-bottom: 1rem;">Data Science Literacy</h4>
                     <p style="margin-bottom: 1rem;">Data Science Literacy is the baseline for understanding AI.</p>
                     <p style="margin-bottom: 1rem;">According to <a href="https://www.datascience4everyone.org/stateofdse" target="_blank" rel="noopener noreferrer" style="color: #4facfe; text-decoration: underline;">UChicago's State of the Field report</a>:</p>
-                    <ul>
-                        <li>Arizona is a Tier 0 State as of 2024, in the research and development phase</li>
-                        <li>Lagging behind 92% of states for Data Science Literacy</li>
-                        <li>No announced statewide plans for course catalogs or adoptions</li>
-                        <li>No tracked K-12 student enrollment in dedicated data science courses</li>
-                        <li>Arizona lacks formal learning standards for DS, weakening AI policies</li>
-                    </ul>
+                    
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Arizona is a Tier 0 State as of 2024, in the research and development phase
+                        </div>
+                    </div>
+                    
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Lagging behind <span class="stat-number">92%</span> of states for Data Science Literacy
+                        </div>
+                    </div>
+                    
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            No announced statewide plans for course catalogs or adoptions
+                        </div>
+                    </div>
+                    
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            No tracked K-12 student enrollment in dedicated data science courses
+                        </div>
+                    </div>
+                    
+                    <div class="data-stat">
+                        <div class="stat-icon"></div>
+                        <div class="stat-content">
+                            Arizona lacks formal learning standards for DS, weakening AI policies
+                        </div>
+                    </div>
                 </div>
 
                 <div class="guidelines-box" style="margin-top: 3rem;">
@@ -1032,6 +1289,8 @@
                     </svg>
                     @airecognitionaz
                 </a>
+                <span style="color: rgba(176, 176, 176, 0.5);">|</span>
+                <a onclick="showPage('feedback')" style="color: #b0b0b0; text-decoration: none; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='#667eea'" onmouseout="this.style.color='#b0b0b0'">Feedback</a>
             </div>
             <p style="margin: 0;">&copy; 2025 Artificial Intelligence Recognition | A Student-Led Organization</p>
         </div>
@@ -1185,4 +1444,3 @@
     </script>
 </body>
 </html>
-
